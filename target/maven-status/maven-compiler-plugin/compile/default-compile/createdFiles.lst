@@ -1,0 +1,4 @@
+com\mantasn\second\psk\entities\Author.class
+com\mantasn\second\psk\entities\Book.class
+com\mantasn\second\psk\entities\LibraryCard.class
+com\mantasn\second\psk\entities\Student.class
