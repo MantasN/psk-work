@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package com.mantasn.second.psk.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -19,13 +21,11 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-/**
- *
- * @author m.neviera
- */
+
 @Entity
 @Table(name = "LIBRARY_CARD")
 @NamedQueries({
@@ -48,8 +48,13 @@ public class LibraryCard implements Serializable {
     private String registrationNo;
     @Column(name = "LIBRARY_NO")
     private Integer libraryNo;
+    @Version
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "OPT_LOCK")
+    private int optLock;
     @OneToMany(mappedBy = "libraryCardId")
-    private List<Book> bookList;
+    private List<Book> bookList = new ArrayList<>();
     @JoinColumn(name = "STUDENT_ID", referencedColumnName = "ID")
     @ManyToOne
     private Student studentId;
@@ -61,9 +66,10 @@ public class LibraryCard implements Serializable {
         this.id = id;
     }
 
-    public LibraryCard(Integer id, String registrationNo) {
+    public LibraryCard(Integer id, String registrationNo, int optLock) {
         this.id = id;
         this.registrationNo = registrationNo;
+        this.optLock = optLock;
     }
 
     public Integer getId() {
@@ -90,6 +96,14 @@ public class LibraryCard implements Serializable {
         this.libraryNo = libraryNo;
     }
 
+    public int getOptLock() {
+        return optLock;
+    }
+
+    public void setOptLock(int optLock) {
+        this.optLock = optLock;
+    }
+
     public List<Book> getBookList() {
         return bookList;
     }
@@ -108,28 +122,27 @@ public class LibraryCard implements Serializable {
 
     @Override
     public int hashCode() {
-        return registrationNo.hashCode();
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
     }
 
     @Override
     public boolean equals(Object object) {
-        if (object == null || !(object instanceof LibraryCard)) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof LibraryCard)) {
             return false;
         }
-        
         LibraryCard other = (LibraryCard) object;
-        
-        if (!registrationNo.equals(other.registrationNo)) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
-        
         return true;
     }
-
 
     @Override
     public String toString() {
         return "com.mantasn.second.psk.entities.LibraryCard[ id=" + id + " ]";
     }
-    
+
 }

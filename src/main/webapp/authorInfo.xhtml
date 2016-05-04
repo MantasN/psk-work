@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <ui:composition template="baseBookAdd.xhtml">	
+        <ui:define name="content">
+            <h:form>
+                <p:steps activeIndex="1" styleClass="custom" readonly="false">
+                    <p:menuitem value="Knygos informacija" url="bookInfo.html"/>
+                    <p:menuitem value="Autoriai" url="authorInfo.html"/>
+                    <p:menuitem value="Patvirtinimas" url="bookAddConfirmation.html"/>
+                </p:steps>
+                <br/>
+                <br/>
+                <h:panelGroup id="authorPanel">
+                    <p:commandButton actionListener="#{addBookController.addAuthor()}" update="more" icon="ui-icon-plusthick"/>
+                    <br/>
+                    <br/>
+                    <h:panelGroup id="more">
+                        <p:dataTable var="author" value="#{addBookController.authors}" emptyMessage="autorių nepridėta">
+                            <p:column headerText="Vardas">
+                               <p:inputText id="firstName" value="#{author.firstName}"/>
+                            </p:column>
+
+                            <p:column headerText="Pavardė">
+                                <p:inputText id="lastName" value="#{author.lastName}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </h:panelGroup>
+                </h:panelGroup>
+                <br/>
+                <p:commandButton value="Tęsti" icon="ui-icon-check" action="#{addBookController.confirmAuthors()}" ajax="false"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

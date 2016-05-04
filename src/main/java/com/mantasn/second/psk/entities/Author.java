@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package com.mantasn.second.psk.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -17,13 +19,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-/**
- *
- * @author m.neviera
- */
+
 @Entity
 @Table(name = "AUTHOR")
 @NamedQueries({
@@ -49,8 +49,13 @@ public class Author implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "LAST_NAME")
     private String lastName;
+    @Version
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "OPT_LOCK")
+    private int optLock;
     @ManyToMany(mappedBy = "authorList")
-    private List<Book> bookList;
+    private List<Book> bookList = new ArrayList<>();
 
     public Author() {
     }
@@ -59,10 +64,11 @@ public class Author implements Serializable {
         this.id = id;
     }
 
-    public Author(Integer id, String firstName, String lastName) {
+    public Author(Integer id, String firstName, String lastName, int optLock) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.optLock = optLock;
     }
 
     public Integer getId() {
@@ -89,6 +95,14 @@ public class Author implements Serializable {
         this.lastName = lastName;
     }
 
+    public int getOptLock() {
+        return optLock;
+    }
+
+    public void setOptLock(int optLock) {
+        this.optLock = optLock;
+    }
+
     public List<Book> getBookList() {
         return bookList;
     }
@@ -99,21 +113,21 @@ public class Author implements Serializable {
 
     @Override
     public int hashCode() {
-        return firstName.hashCode() + lastName.hashCode();
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
     }
 
     @Override
     public boolean equals(Object object) {
-        if (object == null || !(object instanceof Author)) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Author)) {
             return false;
         }
-        
         Author other = (Author) object;
-        
-        if (!this.firstName.equals(other.firstName) || !this.lastName.equals(other.lastName)) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
-        
         return true;
     }
 
@@ -121,5 +135,5 @@ public class Author implements Serializable {
     public String toString() {
         return "com.mantasn.second.psk.entities.Author[ id=" + id + " ]";
     }
-    
+
 }

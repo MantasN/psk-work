@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package com.mantasn.second.psk.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -20,13 +22,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-/**
- *
- * @author m.neviera
- */
+
 @Entity
 @Table(name = "BOOK")
 @NamedQueries({
@@ -56,11 +56,16 @@ public class Book implements Serializable {
     @Size(min = 1, max = 13)
     @Column(name = "ISBN")
     private String isbn;
+    @Version
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "OPT_LOCK")
+    private int optLock;
     @JoinTable(name = "BOOK_AUTHOR", joinColumns = {
         @JoinColumn(name = "BOOK_ID", referencedColumnName = "ID")}, inverseJoinColumns = {
         @JoinColumn(name = "AUTHOR_ID", referencedColumnName = "ID")})
     @ManyToMany
-    private List<Author> authorList;
+    private List<Author> authorList = new ArrayList<>();
     @JoinColumn(name = "LIBRARY_CARD_ID", referencedColumnName = "ID")
     @ManyToOne
     private LibraryCard libraryCardId;
@@ -72,10 +77,11 @@ public class Book implements Serializable {
         this.id = id;
     }
 
-    public Book(Integer id, String registrationNo, String isbn) {
+    public Book(Integer id, String registrationNo, String isbn, int optLock) {
         this.id = id;
         this.registrationNo = registrationNo;
         this.isbn = isbn;
+        this.optLock = optLock;
     }
 
     public Integer getId() {
@@ -110,6 +116,14 @@ public class Book implements Serializable {
         this.isbn = isbn;
     }
 
+    public int getOptLock() {
+        return optLock;
+    }
+
+    public void setOptLock(int optLock) {
+        this.optLock = optLock;
+    }
+
     public List<Author> getAuthorList() {
         return authorList;
     }
@@ -128,21 +142,21 @@ public class Book implements Serializable {
 
     @Override
     public int hashCode() {
-        return isbn.hashCode();
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
     }
 
     @Override
     public boolean equals(Object object) {
-        if (object == null || !(object instanceof Book)) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Book)) {
             return false;
         }
-        
         Book other = (Book) object;
-        
-        if (!isbn.equals(other.isbn)) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
-        
         return true;
     }
 
@@ -150,5 +164,5 @@ public class Book implements Serializable {
     public String toString() {
         return "com.mantasn.second.psk.entities.Book[ id=" + id + " ]";
     }
-    
+
 }

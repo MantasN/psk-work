@@ -25,16 +25,14 @@ import javax.validation.constraints.Size;
 
 
 @Entity
-@Table(name = "STUDENT")
+@Table(name = "LIBRARY")
 @NamedQueries({
-    @NamedQuery(name = "Student.findAll", query = "SELECT s FROM Student s"),
-    @NamedQuery(name = "Student.findById", query = "SELECT s FROM Student s WHERE s.id = :id"),
-    @NamedQuery(name = "Student.findByFirstName", query = "SELECT s FROM Student s WHERE s.firstName = :firstName"),
-    @NamedQuery(name = "Student.findByLastName", query = "SELECT s FROM Student s WHERE s.lastName = :lastName"),
-    @NamedQuery(name = "Student.findByPersonalNo", query = "SELECT s FROM Student s WHERE s.personalNo = :personalNo"),
-    @NamedQuery(name = "Student.findByAddress", query = "SELECT s FROM Student s WHERE s.address = :address"),
-    @NamedQuery(name = "Student.findByPhoneNumber", query = "SELECT s FROM Student s WHERE s.phoneNumber = :phoneNumber")})
-public class Student implements Serializable {
+    @NamedQuery(name = "Library.findAll", query = "SELECT l FROM Library l"),
+    @NamedQuery(name = "Library.findById", query = "SELECT l FROM Library l WHERE l.id = :id"),
+    @NamedQuery(name = "Library.findByTitle", query = "SELECT l FROM Library l WHERE l.title = :title"),
+    @NamedQuery(name = "Library.findByAddress", query = "SELECT l FROM Library l WHERE l.address = :address"),
+    @NamedQuery(name = "Library.findByPhoneNumber", query = "SELECT l FROM Library l WHERE l.phoneNumber = :phoneNumber")})
+public class Library implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,16 +41,8 @@ public class Student implements Serializable {
     @Column(name = "ID")
     private Integer id;
     @Size(max = 50)
-    @Column(name = "FIRST_NAME")
-    private String firstName;
-    @Size(max = 50)
-    @Column(name = "LAST_NAME")
-    private String lastName;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "PERSONAL_NO")
-    private String personalNo;
+    @Column(name = "TITLE")
+    private String title;
     @Size(max = 200)
     @Column(name = "ADDRESS")
     private String address;
@@ -64,19 +54,18 @@ public class Student implements Serializable {
     @NotNull
     @Column(name = "OPT_LOCK")
     private int optLock;
-    @OneToMany(mappedBy = "studentId")
-    private List<LibraryCard> libraryCardList = new ArrayList<>();
+    @OneToMany(mappedBy = "libraryId")
+    private List<Librarian> librarianList = new ArrayList<>();
 
-    public Student() {
+    public Library() {
     }
 
-    public Student(Integer id) {
+    public Library(Integer id) {
         this.id = id;
     }
 
-    public Student(Integer id, String personalNo, int optLock) {
+    public Library(Integer id, int optLock) {
         this.id = id;
-        this.personalNo = personalNo;
         this.optLock = optLock;
     }
 
@@ -88,28 +77,12 @@ public class Student implements Serializable {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getTitle() {
+        return title;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getPersonalNo() {
-        return personalNo;
-    }
-
-    public void setPersonalNo(String personalNo) {
-        this.personalNo = personalNo;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getAddress() {
@@ -136,12 +109,12 @@ public class Student implements Serializable {
         this.optLock = optLock;
     }
 
-    public List<LibraryCard> getLibraryCardList() {
-        return libraryCardList;
+    public List<Librarian> getLibrarianList() {
+        return librarianList;
     }
 
-    public void setLibraryCardList(List<LibraryCard> libraryCardList) {
-        this.libraryCardList = libraryCardList;
+    public void setLibrarianList(List<Librarian> librarianList) {
+        this.librarianList = librarianList;
     }
 
     @Override
@@ -154,10 +127,10 @@ public class Student implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Student)) {
+        if (!(object instanceof Library)) {
             return false;
         }
-        Student other = (Student) object;
+        Library other = (Library) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -166,7 +139,7 @@ public class Student implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mantasn.second.psk.entities.Student[ id=" + id + " ]";
+        return "com.mantasn.second.psk.entities.Library[ id=" + id + " ]";
     }
 
 }

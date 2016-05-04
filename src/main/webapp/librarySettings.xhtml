@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Bibliotekos nustatymai</title>
+    </h:head>
+    <h:body>
+        <p:messages id="messages" autoUpdate="true" closable="true"  />
+        <h1>Bibliotekos nustatymai</h1>
+        <h:form>
+            <h2>Keisti bibliotekos adresą</h2>
+            <h:panelGrid columns="2">
+                <h:outputLabel value="Adresas:" />
+                <p:inputText value="#{libraryController.library.address}"/>
+            </h:panelGrid>
+            <h2>Pridėti bibliotekininką</h2>
+            <h:panelGrid columns="2">
+                <h:outputLabel value="Vardas:" />
+                <p:inputText value="#{libraryController.librarian.firstName}"/>
+                <h:outputLabel value="Pavardė:" />
+                <p:inputText value="#{libraryController.librarian.lastName}"/>
+                <h:outputLabel value="Asmens kodas:" />
+                <p:inputText value="#{libraryController.librarian.personalNo}"/>
+                <h:outputLabel value="Adresas:" />
+                <p:inputText value="#{libraryController.librarian.address}"/>
+                <h:outputLabel value="Telefono numeris:" />
+                <p:inputText value="#{libraryController.librarian.phoneNumber}"/>
+                <br/>
+                <p:commandButton value="Išsaugoti" icon="ui-icon-check" action="#{libraryController.updateLibrary()}" ajax="true"/>
+            </h:panelGrid>
+        </h:form>
+    </h:body>
+</html>
+

@@ -7,17 +7,16 @@
 package com.mantasn.second.psk.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
@@ -25,16 +24,16 @@ import javax.validation.constraints.Size;
 
 
 @Entity
-@Table(name = "STUDENT")
+@Table(name = "LIBRARIAN")
 @NamedQueries({
-    @NamedQuery(name = "Student.findAll", query = "SELECT s FROM Student s"),
-    @NamedQuery(name = "Student.findById", query = "SELECT s FROM Student s WHERE s.id = :id"),
-    @NamedQuery(name = "Student.findByFirstName", query = "SELECT s FROM Student s WHERE s.firstName = :firstName"),
-    @NamedQuery(name = "Student.findByLastName", query = "SELECT s FROM Student s WHERE s.lastName = :lastName"),
-    @NamedQuery(name = "Student.findByPersonalNo", query = "SELECT s FROM Student s WHERE s.personalNo = :personalNo"),
-    @NamedQuery(name = "Student.findByAddress", query = "SELECT s FROM Student s WHERE s.address = :address"),
-    @NamedQuery(name = "Student.findByPhoneNumber", query = "SELECT s FROM Student s WHERE s.phoneNumber = :phoneNumber")})
-public class Student implements Serializable {
+    @NamedQuery(name = "Librarian.findAll", query = "SELECT l FROM Librarian l"),
+    @NamedQuery(name = "Librarian.findById", query = "SELECT l FROM Librarian l WHERE l.id = :id"),
+    @NamedQuery(name = "Librarian.findByFirstName", query = "SELECT l FROM Librarian l WHERE l.firstName = :firstName"),
+    @NamedQuery(name = "Librarian.findByLastName", query = "SELECT l FROM Librarian l WHERE l.lastName = :lastName"),
+    @NamedQuery(name = "Librarian.findByPersonalNo", query = "SELECT l FROM Librarian l WHERE l.personalNo = :personalNo"),
+    @NamedQuery(name = "Librarian.findByAddress", query = "SELECT l FROM Librarian l WHERE l.address = :address"),
+    @NamedQuery(name = "Librarian.findByPhoneNumber", query = "SELECT l FROM Librarian l WHERE l.phoneNumber = :phoneNumber")})
+public class Librarian implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -64,17 +63,18 @@ public class Student implements Serializable {
     @NotNull
     @Column(name = "OPT_LOCK")
     private int optLock;
-    @OneToMany(mappedBy = "studentId")
-    private List<LibraryCard> libraryCardList = new ArrayList<>();
+    @JoinColumn(name = "LIBRARY_ID", referencedColumnName = "ID")
+    @ManyToOne
+    private Library libraryId;
 
-    public Student() {
+    public Librarian() {
     }
 
-    public Student(Integer id) {
+    public Librarian(Integer id) {
         this.id = id;
     }
 
-    public Student(Integer id, String personalNo, int optLock) {
+    public Librarian(Integer id, String personalNo, int optLock) {
         this.id = id;
         this.personalNo = personalNo;
         this.optLock = optLock;
@@ -136,12 +136,12 @@ public class Student implements Serializable {
         this.optLock = optLock;
     }
 
-    public List<LibraryCard> getLibraryCardList() {
-        return libraryCardList;
+    public Library getLibraryId() {
+        return libraryId;
     }
 
-    public void setLibraryCardList(List<LibraryCard> libraryCardList) {
-        this.libraryCardList = libraryCardList;
+    public void setLibraryId(Library libraryId) {
+        this.libraryId = libraryId;
     }
 
     @Override
@@ -154,10 +154,10 @@ public class Student implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Student)) {
+        if (!(object instanceof Librarian)) {
             return false;
         }
-        Student other = (Student) object;
+        Librarian other = (Librarian) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -166,7 +166,7 @@ public class Student implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mantasn.second.psk.entities.Student[ id=" + id + " ]";
+        return "com.mantasn.second.psk.entities.Librarian[ id=" + id + " ]";
     }
 
 }

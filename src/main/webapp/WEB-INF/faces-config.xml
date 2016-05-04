@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config>
+    <navigation-rule>
+        <from-view-id>/bookInfo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>authorInfo</from-outcome>
+            <to-view-id>/authorInfo.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/authorInfo.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>bookAddConfirmation</from-outcome>
+            <to-view-id>/bookAddConfirmation.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/bookAddConfirmation.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>index</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/librarySettings.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>index</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+</faces-config>
