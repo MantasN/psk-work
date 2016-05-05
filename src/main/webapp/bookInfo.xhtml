@@ -16,11 +16,11 @@
                 <br/>
                 <h:panelGrid columns="2">
                     <h:outputLabel value="ISBN:" for="isbn" />
-                    <p:inputText id="isbn" value="#{addBookController.book.isbn}"/>
+                    <p:inputText id="isbn" value="#{addBookController.book.isbn}" label="ISBN"/>
                     <h:outputLabel value="Pavadinimas:" for="title" />
-                    <p:inputText id="title" value="#{addBookController.book.title}"/>
+                    <p:inputText id="title" value="#{addBookController.book.title}" label="Pavadinimas"/>
                     <br/>
-                    <p:commandButton value="Tęsti" icon="ui-icon-check" action="#{addBookController.confirmBook()}" ajax="true"/>
+                    <p:commandButton value="Tęsti" icon="ui-icon-check" action="#{addBookController.confirmBook()}" />
                 </h:panelGrid>
             </h:form>
         </ui:define>

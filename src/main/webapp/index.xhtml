@@ -5,9 +5,14 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Pagrindinis</title>
+        <style type="text/css">
+            body {
+                font-family: Tahoma, Geneva, sans-serif;
+            }
+        </style>
     </h:head>
     <h:body>
-        <p:messages id="messages" autoUpdate="true" closable="true"  />
+        <p:messages id="messages" autoUpdate="true" closable="true" />
         <h:form>
             <h1>Biblioteka</h1>
             <p:menubar>
@@ -17,7 +22,7 @@
             <h2>Ar egzistuoja?</h2>
             <h:panelGrid columns="2">
                 <h:outputLabel value="ISBN:" for="isbn" />
-                <p:inputText id="isbn" value="#{searchController.isbn}"/>
+                <p:inputText id="isbn" value="#{searchController.isbn}" label="ISBN"/>
                 <p:commandButton value="Rasti" icon="ui-icon-check" actionListener="#{searchController.search()}" update="result"/>
                 <h:outputText value="#{searchController.result}" id="result"/>
             </h:panelGrid>

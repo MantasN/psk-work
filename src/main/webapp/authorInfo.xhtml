@@ -21,17 +21,17 @@
                     <h:panelGroup id="more">
                         <p:dataTable var="author" value="#{addBookController.authors}" emptyMessage="autorių nepridėta">
                             <p:column headerText="Vardas">
-                               <p:inputText id="firstName" value="#{author.firstName}"/>
+                               <p:inputText id="firstName" value="#{author.firstName}" label="Vardas"/>
                             </p:column>
 
                             <p:column headerText="Pavardė">
-                                <p:inputText id="lastName" value="#{author.lastName}"/>
+                                <p:inputText id="lastName" value="#{author.lastName}" label="Pavardė"/>
                             </p:column>
                         </p:dataTable>
                     </h:panelGroup>
                 </h:panelGroup>
                 <br/>
-                <p:commandButton value="Tęsti" icon="ui-icon-check" action="#{addBookController.confirmAuthors()}" ajax="false"/>
+                <p:commandButton value="Tęsti" icon="ui-icon-check" action="#{addBookController.confirmAuthors()}" />
             </h:form>
         </ui:define>
     </ui:composition>
